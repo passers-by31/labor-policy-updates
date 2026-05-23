@@ -8,3 +8,4 @@ site/public/flexsearch-index.json
 .DS_Store
 *.egg-info/
 .pytest_cache/
+site/.astro/
