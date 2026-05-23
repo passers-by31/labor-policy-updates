@@ -2,6 +2,7 @@
 
 import argparse
 import logging
+import os
 import sys
 
 import yaml
@@ -9,6 +10,7 @@ import yaml
 from crawler.spiders.base import Spider
 from crawler.spiders.mohrss import MohrssSpider
 from crawler.spiders.govcn import GovcnSpider
+from crawler.spiders.nhsa import NhsaSpider
 from crawler.spiders.national import NationalSpider
 from crawler.middleware.rate_limiter import RateLimiter
 from crawler.middleware.user_agent import UserAgentPool
@@ -40,6 +42,7 @@ def build_spider(
     spider_map = {
         "mohrss": MohrssSpider,
         "govcn": GovcnSpider,
+        "nhsa": NhsaSpider,
     }
     cls = spider_map.get(source_id, NationalSpider)
     return cls(source_cfg, rate_limiter, ua_pool, timeout=timeout)
@@ -58,7 +61,10 @@ def main() -> None:
 
     rate_limiter = RateLimiter()
     ua_pool = UserAgentPool(ua_list)
-    relevance_filter = RelevanceFilter("keywords.yaml")
+    # keywords.yaml 与 config.yaml 在同一目录
+    config_dir = os.path.dirname(os.path.abspath(args.config))
+    kw_path = os.path.join(config_dir, "keywords.yaml")
+    relevance_filter = RelevanceFilter(kw_path)
 
     stats = {"total_sites": 0, "success_sites": 0, "new_policies": 0}
 

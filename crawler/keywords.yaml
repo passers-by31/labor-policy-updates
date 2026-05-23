@@ -80,6 +80,6 @@ exclude:
 weights:
   title_hit: 3
   tag_hit: 2
-  summary_hit: 1
+  content_hit: 1
   content_first_paragraph_hit: 1
   threshold: 2

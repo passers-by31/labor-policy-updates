@@ -24,7 +24,8 @@ sources:
     base_url: "https://www.mohrss.gov.cn"
     encoding: "utf-8"
     region: "全国"
-    active: true
+    # 站点启用了 Tencent EdgeOne 反爬，暂无法用 requests 直接抓取
+    active: false
     crawl_interval_hours: 24
     list_pages:
       - url: "https://www.mohrss.gov.cn/xxgk2020/fdzdgknr/zcfg/"
@@ -33,14 +34,7 @@ sources:
         title_attr: "text"
         link_attr: "href"
         page_param: "index.html"
-        max_pages: 5
-      - url: "https://www.mohrss.gov.cn/xxgk2020/fdzdgknr/tz/"
-        name: "通知公告"
-        list_selector: "ul.list-list li a"
-        title_attr: "text"
-        link_attr: "href"
-        page_param: "index.html"
-        max_pages: 5
+        max_pages: 1
     detail_rules:
       title_selector: "div.content-title h1, div.article-title h1"
       content_selector: "div.TRS_Editor, div.content-body, div.article-content"
@@ -55,49 +49,37 @@ sources:
     active: true
     crawl_interval_hours: 24
     list_pages:
-      - url: "https://www.gov.cn/zhengce/zhongyangyang/index.htm"
-        name: "中央文件"
-        list_selector: "div.news_box ul li a"
-        title_attr: "text"
-        link_attr: "href"
-        max_pages: 3
-      - url: "https://www.gov.cn/zhengce/content/more.htm"
-        name: "国务院政策"
-        list_selector: "div.zcwj_con ul li a"
-        title_attr: "text"
-        link_attr: "href"
-        max_pages: 3
-    detail_rules:
-      title_selector: "div#UCAP-CONTENT h1, div.content h1, h1"
-      content_selector: "div#UCAP-CONTENT, div.TRS_Editor, div.pages_content"
-      publish_date_selector: "div.fbtime span, span.date"
-      document_number_selector: "div.xx_con, div.info"
+      - url: "https://www.gov.cn/zhengce/zuixin/ZUIXINZHENGCE.json"
+        name: "最新政策（JSON API）"
+        max_pages: 1
 
   - id: nhsa
     name: "国家医疗保障局"
     base_url: "https://www.nhsa.gov.cn"
     encoding: "utf-8"
     region: "全国"
-    active: false
+    active: true
     crawl_interval_hours: 48
     list_pages:
       - url: "https://www.nhsa.gov.cn/col/col14/index.html"
-        name: "政策文件"
-        list_selector: "ul.list-list li a"
+        name: "医保动态"
+        list_selector: "div.mainbody li a"
         title_attr: "text"
         link_attr: "href"
-        max_pages: 3
+        # TRS 系统使用 AJAX 分页，仅首页包含全部 45 条数据
+        max_pages: 1
     detail_rules:
-      title_selector: "div.content-title h1"
-      content_selector: "div.TRS_Editor, div.content-body"
-      publish_date_selector: "div.content-info span.date"
-      document_number_selector: "div.content-info"
+      title_selector: "div.atricle-title"
+      content_selector: "div#zoom"
+      publish_date_selector: "span.wzy-rq"
+      document_number_selector: ""
 
   - id: chinatax
     name: "国家税务总局"
     base_url: "https://www.chinatax.gov.cn"
     encoding: "utf-8"
     region: "全国"
+    # 内容以税务政策为主，与劳动政策相关性低，暂不启用
     active: false
     crawl_interval_hours: 48
     list_pages:
