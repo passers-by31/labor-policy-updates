@@ -27,13 +27,11 @@ jobs:
 
       - name: 安装爬虫依赖
         run: |
-          cd crawler
-          pip install -r requirements.txt
+          pip install -r crawler/requirements.txt
 
       - name: 运行爬虫
         run: |
-          cd crawler
-          python main.py --config config.yaml --output ../data
+          PYTHONPATH=$PWD python -m crawler.main --config crawler/config.yaml --output data
 
       - name: 检测数据变更
         id: check
