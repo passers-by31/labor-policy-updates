@@ -1,0 +1,21 @@
+---
+export interface Props {
+  segments: { label: string; href?: string }[];
+}
+
+const { segments } = Astro.props;
+---
+
+<nav class="text-sm text-gray-500 mb-4 flex items-center gap-1.5" aria-label="面包屑导航">
+  <a href="/" class="hover:text-blue-600 no-underline">首页</a>
+  {segments.map((seg, i) => (
+    <>
+      <span class="text-gray-300">/</span>
+      {seg.href ? (
+        <a href={seg.href} class="hover:text-blue-600 no-underline">{seg.label}</a>
+      ) : (
+        <span class="text-gray-700">{seg.label}</span>
+      )}
+    </>
+  ))}
+</nav>

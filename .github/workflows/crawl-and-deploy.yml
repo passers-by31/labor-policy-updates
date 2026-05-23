@@ -1,0 +1,89 @@
+name: 采集 + 构建 + 部署
+
+on:
+  schedule:
+    - cron: '0 1 * * *'        # 每天 UTC 1:00（北京时间 9:00）
+  workflow_dispatch:            # 支持手动触发
+
+env:
+  NODE_VERSION: '22'
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  crawl-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      # ========== 检出代码 ==========
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # ========== 运行爬虫 ==========
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: crawler/requirements.txt
+
+      - name: 安装爬虫依赖
+        run: |
+          cd crawler
+          pip install -r requirements.txt
+
+      - name: 运行爬虫
+        run: |
+          cd crawler
+          python main.py --config config.yaml --output ../data
+
+      # ========== 提交数据变更 ==========
+      - name: 检测数据变更
+        id: check
+        run: |
+          if [ -n "$(git status --porcelain data/)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 提交并推送数据
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "crawler-bot"
+          git config user.email "crawler-bot@users.noreply.github.com"
+          git add data/
+          git commit -m "chore(data): 更新政策数据 $(date +'%Y-%m-%d')"
+          git push
+
+      # ========== 构建站点 ==========
+      - name: 设置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: site/package-lock.json
+
+      - name: 安装前端依赖
+        run: |
+          cd site
+          npm ci
+
+      - name: 生成搜索索引
+        run: |
+          cd site
+          node scripts/build-search-index.mjs
+
+      - name: 构建 Astro 站点
+        run: |
+          cd site
+          npx astro build
+
+      # ========== 部署到 Cloudflare Pages ==========
+      - name: 部署到 Cloudflare Pages
+        if: steps.check.outputs.changed == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          command: pages deploy ../site/dist/ --project-name=labor-policy-updates

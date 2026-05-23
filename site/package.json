@@ -1,0 +1,19 @@
+{
+  "name": "labor-policy-updates",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "node scripts/build-search-index.mjs && astro build",
+    "preview": "astro preview",
+    "build-search-index": "node scripts/build-search-index.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "@astrojs/rss": "^4.0.0",
+    "@astrojs/sitemap": "^3.0.0",
+    "flexsearch": "^0.7.43",
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/vite": "^4.0.0"
+  }
+}

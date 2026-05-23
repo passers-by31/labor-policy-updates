@@ -1,0 +1,10 @@
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.env
+site/public/search-index.json
+site/public/flexsearch-index.json
+.DS_Store
+*.egg-info/
+.pytest_cache/

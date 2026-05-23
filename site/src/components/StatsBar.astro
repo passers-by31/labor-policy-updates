@@ -1,0 +1,29 @@
+---
+export interface Props {
+  totalPolicies: number;
+  sourceCount: number;
+  categoryCount: number;
+  thisMonthCount?: number;
+}
+
+const { totalPolicies, sourceCount, categoryCount, thisMonthCount = 0 } = Astro.props;
+---
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+  <div class="bg-white rounded-lg border border-gray-200 p-4 text-center">
+    <div class="text-2xl font-bold text-blue-600">{totalPolicies}</div>
+    <div class="text-sm text-gray-500 mt-1">政策总数</div>
+  </div>
+  <div class="bg-white rounded-lg border border-gray-200 p-4 text-center">
+    <div class="text-2xl font-bold text-green-600">{sourceCount}</div>
+    <div class="text-sm text-gray-500 mt-1">数据来源</div>
+  </div>
+  <div class="bg-white rounded-lg border border-gray-200 p-4 text-center">
+    <div class="text-2xl font-bold text-purple-600">{categoryCount}</div>
+    <div class="text-sm text-gray-500 mt-1">政策分类</div>
+  </div>
+  <div class="bg-white rounded-lg border border-gray-200 p-4 text-center">
+    <div class="text-2xl font-bold text-orange-600">{thisMonthCount > 0 ? thisMonthCount : '-'}</div>
+    <div class="text-sm text-gray-500 mt-1">本月新增</div>
+  </div>
+</div>

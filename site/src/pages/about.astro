@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import type { Source } from "../lib/types";
+
+const DATA_DIR = join(process.cwd(), "..", "data");
+const sourcesRaw = readFileSync(join(DATA_DIR, "sources.json"), "utf-8");
+const sources: Source[] = JSON.parse(sourcesRaw);
+---
+
+<BaseLayout title="关于">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <Breadcrumb segments={[{ label: "关于" }]} />
+
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">关于本站</h1>
+
+    <div class="space-y-6">
+      <section class="bg-white border border-gray-200 rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">项目介绍</h2>
+        <p class="text-sm text-gray-600 leading-relaxed">
+          劳动政策更新是一个自动采集国内劳动相关政策法规通知更新的信息聚合站。
+          每日自动从人力资源和社会保障部、国务院等政府官方网站获取最新政策信息，
+          帮助HR从业者、法务人员和企业管理者及时掌握劳动政策动态。
+        </p>
+      </section>
+
+      <section class="bg-white border border-gray-200 rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-3">数据来源</h2>
+        <ul class="space-y-3">
+          {sources.map((src) => (
+            <li class="text-sm">
+              <a href={src.url} target="_blank" rel="noopener noreferrer"
+                 class="text-blue-600 hover:text-blue-800 no-underline">
+                {src.name}
+              </a>
+              <span class="text-gray-500 ml-2">
+                {src.region === "全国" ? "国家级" : src.region}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="bg-white border border-gray-200 rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">GitHub 仓库</h2>
+        <p class="text-sm text-gray-600">
+          本项目为开源项目，源代码托管在 GitHub 上。
+          欢迎提交 Issue 和 Pull Request 参与贡献。
+        </p>
+      </section>
+
+      <section class="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-800">
+        <strong class="block mb-1">免责声明</strong>
+        <p class="leading-relaxed">
+          本网站提供的政策信息仅供参考，不构成法律意见。所有信息均来源于政府官方网站的公开信息，
+          具体内容请以政府官方发布的原文为准。本网站不对因信息滞后、不完整或解读错误导致的任何损失承担责任。
+          如需获取权威信息，请访问原始出处核实。
+        </p>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

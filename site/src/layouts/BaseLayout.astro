@@ -1,0 +1,45 @@
+---
+import "../styles/global.css";
+import Footer from "../components/Footer.astro";
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title ? `${title} | 劳动政策更新` : "劳动政策更新"}</title>
+    <meta name="description" content={description || "自动采集国内劳动相关政策法规更新通知"} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title="劳动政策更新" href="/rss.xml" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-gray-50 text-gray-900">
+    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-40">
+      <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+        <a href="/" class="text-lg font-bold text-blue-700 hover:text-blue-800 no-underline">
+          劳动政策更新
+        </a>
+        <nav class="flex items-center gap-5 text-sm text-gray-600">
+          <a href="/" class="hover:text-blue-600 transition-colors">首页</a>
+          <a href="/policies" class="hover:text-blue-600 transition-colors">政策列表</a>
+          <a href="/categories/social-insurance" class="hover:text-blue-600 transition-colors">分类</a>
+          <a href="/subscribe" class="hover:text-blue-600 transition-colors">订阅</a>
+          <a href="/about" class="hover:text-blue-600 transition-colors">关于</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

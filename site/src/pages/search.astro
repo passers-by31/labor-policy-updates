@@ -1,0 +1,171 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SearchBar from "../components/SearchBar.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+import type { Category, Source } from "../lib/types";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const DATA_DIR = join(__dirname, "..", "..", "..", "data");
+
+const categoriesRaw = readFileSync(join(DATA_DIR, "categories.json"), "utf-8");
+const sourcesRaw = readFileSync(join(DATA_DIR, "sources.json"), "utf-8");
+const categories: Category[] = JSON.parse(categoriesRaw);
+const sources: Source[] = JSON.parse(sourcesRaw);
+
+const query = Astro.url.searchParams.get("q") || "";
+---
+
+<BaseLayout title={query ? `搜索: ${query}` : "搜索"}>
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <Breadcrumb segments={[{ label: "搜索结果" }]} />
+
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">搜索政策</h1>
+
+    <div class="max-w-2xl mb-8">
+      <SearchBar initialQuery={query} />
+    </div>
+
+    <div class="flex gap-6 flex-col md:flex-row">
+      <aside class="md:w-48 shrink-0">
+        <div class="bg-white border border-gray-200 rounded-lg p-4 space-y-4 sticky top-20">
+          <div>
+            <h4 class="text-sm font-semibold text-gray-700 mb-2">分类</h4>
+            <select id="search-category" class="w-full text-sm border border-gray-300 rounded px-2 py-1.5">
+              <option value="">全部分类</option>
+              {categories.map((c) => (
+                <option value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <h4 class="text-sm font-semibold text-gray-700 mb-2">来源</h4>
+            <select id="search-source" class="w-full text-sm border border-gray-300 rounded px-2 py-1.5">
+              <option value="">全部来源</option>
+              {sources.map((s) => (
+                <option value={s.id}>{s.name}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </aside>
+
+      <div class="flex-1">
+        <div id="search-loading" class="text-center py-16 text-gray-400 {query ? '' : 'hidden'}">
+          <p>正在搜索...</p>
+        </div>
+
+        <div id="search-initial" class="text-center py-16 text-gray-400 {query ? 'hidden' : ''}">
+          <p>输入关键词搜索劳动政策</p>
+          <p class="text-sm mt-1">支持标题、文号、关键词搜索</p>
+        </div>
+
+        <div id="search-results" class="space-y-3 hidden"></div>
+
+        <div id="search-empty" class="text-center py-12 text-gray-400 hidden">
+          <p>未找到与 "<strong class="text-gray-600" id="search-query-display">{query}</strong>" 相关的政策</p>
+          <p class="text-sm mt-2">请尝试其他关键词，如：社保、工资、劳动合同等</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { loadSearchIndex, search } from "../lib/search";
+
+  const query = new URLSearchParams(window.location.search).get("q") || "";
+
+  async function runSearch(q) {
+    const loading = document.getElementById("search-loading");
+    const results = document.getElementById("search-results");
+    const empty = document.getElementById("search-empty");
+    const initial = document.getElementById("search-initial");
+
+    if (initial) initial.classList.add("hidden");
+    if (loading) loading.classList.remove("hidden");
+    if (results) results.classList.add("hidden");
+    if (empty) empty.classList.add("hidden");
+
+    if (!q.trim()) {
+      if (loading) loading.classList.add("hidden");
+      if (initial) initial.classList.remove("hidden");
+      return;
+    }
+
+    try {
+      const category = document.getElementById("search-category")?.value || "";
+      const source = document.getElementById("search-source")?.value || "";
+      const filters: Record<string, string> = {};
+      if (category) filters.category = category;
+      if (source) filters.sourceId = source;
+
+      const docs = await search(q, filters);
+      if (loading) loading.classList.add("hidden");
+
+      if (docs.length === 0) {
+        if (empty) {
+          document.getElementById("search-query-display").textContent = q;
+          empty.classList.remove("hidden");
+        }
+        return;
+      }
+
+      if (results) {
+        results.innerHTML = docs.map(d => `
+          <a href="/policies/${d.id}" class="block bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md hover:border-blue-300 transition-all no-underline">
+            <h3 class="text-base font-semibold text-gray-900 leading-snug mb-1">${highlightText(d.title, q)}</h3>
+            <div class="flex flex-wrap items-center gap-2 mt-1 text-xs">
+              <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-800">${escHtml(d.sourceId)}</span>
+              ${d.publishDate ? `<span class="text-gray-500">${d.publishDate}</span>` : ''}
+            </div>
+            ${d.summary ? `<p class="text-sm text-gray-600 mt-2 line-clamp-2 leading-relaxed">${highlightText(d.summary, q)}</p>` : ''}
+            ${d.documentNumber ? `<p class="text-xs text-gray-400 mt-1">文号：${highlightText(d.documentNumber, q)}</p>` : ''}
+          </a>
+        `).join("");
+        results.classList.remove("hidden");
+      }
+    } catch (e) {
+      if (loading) loading.classList.add("hidden");
+      if (empty) {
+        document.getElementById("search-query-display").textContent = q;
+        empty.classList.remove("hidden");
+      }
+    }
+  }
+
+  function highlightText(text, query) {
+    if (!text || !query) return escHtml(text || "");
+    const escaped = escHtml(text);
+    const words = query.trim().split(/\s+/).filter(Boolean);
+    let result = escaped;
+    for (const word of words) {
+      const safeWord = word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      result = result.replace(new RegExp(`(${safeWord})`, "gi"), '<mark class="bg-yellow-200 px-0.5 rounded">$1</mark>');
+    }
+    return result;
+  }
+
+  function escHtml(text) {
+    const d = document.createElement("div");
+    d.textContent = text || "";
+    return d.innerHTML;
+  }
+
+  (async function init() {
+    if (query) {
+      await loadSearchIndex();
+      await runSearch(query);
+    }
+
+    document.getElementById("search-category")?.addEventListener("change", () => {
+      if (query) runSearch(query);
+    });
+    document.getElementById("search-source")?.addEventListener("change", () => {
+      if (query) runSearch(query);
+    });
+  })();
+</script>

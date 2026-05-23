@@ -1,0 +1,127 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
+import { getAllPolicies, getPolicyById } from "../../lib/policies";
+import { getCategoryById } from "../../lib/categories";
+import { formatDate, statusLabel, statusColor } from "../../lib/utils";
+import type { Policy } from "../../lib/types";
+
+export async function getStaticPaths() {
+  const policies = getAllPolicies();
+  return policies.map((p) => ({
+    params: { slug: p.id },
+    props: { policy: p },
+  }));
+}
+
+const { policy } = Astro.props as { policy: Policy };
+
+const category = policy.category ? getCategoryById(policy.category) : undefined;
+const relatedPolicies = policy.relatedPolicyIds && policy.relatedPolicyIds.length > 0
+  ? policy.relatedPolicyIds.map(id => getPolicyById(id)).filter(Boolean) as Policy[]
+  : [];
+---
+
+<BaseLayout title={policy.title} description={policy.summary}>
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <Breadcrumb
+      segments={[
+        { label: "政策列表", href: "/policies" },
+        { label: policy.title },
+      ]}
+    />
+
+    <article>
+      <h1 class="text-2xl font-bold text-gray-900 leading-snug mb-2">
+        {policy.title}
+      </h1>
+
+      {policy.documentNumber && (
+        <p class="text-sm text-gray-500 mb-4">{policy.documentNumber}</p>
+      )}
+
+      <div class="flex flex-wrap items-center gap-3 text-sm mb-6 pb-4 border-b border-gray-200">
+        <span class="text-gray-700 font-medium">{policy.sourceName || policy.sourceId}</span>
+        {policy.issuingAuthority && (
+          <>
+            <span class="text-gray-300">|</span>
+            <span class="text-gray-500">{policy.issuingAuthority}</span>
+          </>
+        )}
+        <span class="text-gray-300">|</span>
+        <span class="text-gray-500">发布日期：{formatDate(policy.publishDate)}</span>
+        {policy.effectiveDate && (
+          <>
+            <span class="text-gray-300">|</span>
+            <span class="text-gray-500">生效日期：{formatDate(policy.effectiveDate)}</span>
+          </>
+        )}
+        {policy.status && (
+          <>
+            <span class="text-gray-300">|</span>
+            <span class={"px-2 py-0.5 rounded text-xs font-medium " + statusColor(policy.status)}>
+              {statusLabel(policy.status)}
+            </span>
+          </>
+        )}
+      </div>
+
+      {policy.summary && (
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <h4 class="text-sm font-semibold text-blue-800 mb-1">政策摘要</h4>
+          <p class="text-sm text-blue-900 leading-relaxed">{policy.summary}</p>
+        </div>
+      )}
+
+      <div class="content-area text-gray-800 leading-relaxed">
+        {policy.contentHtml ? (
+          <fragment set:html={policy.contentHtml} />
+        ) : policy.content ? (
+          <div style="white-space: pre-wrap">{policy.content}</div>
+        ) : (
+          <p class="text-gray-400 italic">暂无正文内容</p>
+        )}
+      </div>
+
+      <div class="mt-8 pt-4 border-t border-gray-200 space-y-4">
+        {policy.tags && policy.tags.length > 0 && (
+          <div>
+            <h4 class="text-sm font-semibold text-gray-700 mb-2">标签</h4>
+            <div class="flex flex-wrap gap-2">
+              {policy.tags.map((tag) => (
+                <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <a
+          href={policy.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-gray-200 transition-colors no-underline"
+        >
+          查看官方原文 &nearr;
+        </a>
+      </div>
+    </article>
+
+    {relatedPolicies.length > 0 && (
+      <section class="mt-10 pt-6 border-t border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">关联政策</h2>
+        <div class="space-y-2">
+          {relatedPolicies.map((rp) => (
+            <a
+              href={`/policies/${rp.id}`}
+              class="block text-sm text-blue-600 hover:text-blue-800 no-underline py-1"
+            >
+              &bull; {rp.title}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

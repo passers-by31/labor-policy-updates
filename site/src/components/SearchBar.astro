@@ -1,0 +1,27 @@
+---
+export interface Props {
+  large?: boolean;
+  placeholder?: string;
+  initialQuery?: string;
+}
+
+const { large, placeholder, initialQuery } = Astro.props;
+---
+
+<form action="/search" method="get" class="flex gap-2">
+  <input
+    type="text"
+    name="q"
+    value={initialQuery || ""}
+    placeholder={placeholder || "搜索劳动政策、关键词、文号..."}
+    class={`flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-400 ${
+      large ? "text-lg py-3" : "text-sm"
+    }`}
+  />
+  <button
+    type="submit"
+    class="bg-blue-600 text-white rounded-lg px-6 py-2 hover:bg-blue-700 transition-colors font-medium whitespace-nowrap"
+  >
+    搜索
+  </button>
+</form>

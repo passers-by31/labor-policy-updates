@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .content-area {
+    line-height: 1.8;
+    font-size: 1rem;
+  }
+  .content-area p {
+    margin-bottom: 1em;
+  }
+  .content-area a {
+    @apply text-blue-700 underline decoration-blue-300 hover:text-blue-900;
+  }
+  .content-area h2 {
+    @apply text-xl font-bold mt-8 mb-3 text-gray-900;
+  }
+  .content-area h3 {
+    @apply text-lg font-semibold mt-6 mb-2 text-gray-800;
+  }
+  .content-area ul {
+    @apply list-disc pl-6 mb-4 text-gray-700;
+  }
+  .content-area ol {
+    @apply list-decimal pl-6 mb-4 text-gray-700;
+  }
+  .content-area blockquote {
+    @apply border-l-4 border-blue-400 pl-4 py-2 my-4 bg-blue-50 text-gray-700;
+  }
+  .content-area table {
+    @apply w-full border-collapse mb-4;
+  }
+  .content-area th {
+    @apply border border-gray-300 bg-gray-100 px-3 py-2 text-left font-semibold;
+  }
+  .content-area td {
+    @apply border border-gray-300 px-3 py-2;
+  }
+
+  .policy-status-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .policy-status-effective {
+    @apply bg-green-100 text-green-800;
+  }
+  .policy-status-draft {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  .policy-status-expired {
+    @apply bg-red-100 text-red-800;
+  }
+  .policy-status-amended {
+    @apply bg-orange-100 text-orange-800;
+  }
+}

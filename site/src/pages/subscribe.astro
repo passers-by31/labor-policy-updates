@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
+---
+
+<BaseLayout title="订阅更新">
+  <div class="max-w-4xl mx-auto px-4 py-8">
+    <Breadcrumb segments={[{ label: "订阅更新" }]} />
+
+    <h1 class="text-2xl font-bold text-gray-900 mb-6">订阅更新</h1>
+
+    <div class="space-y-6">
+      <div class="bg-white border border-gray-200 rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">RSS 订阅</h2>
+        <p class="text-sm text-gray-600 mb-4">
+          使用标准 RSS 阅读器订阅劳动政策更新推送。支持 Feedly、Inoreader 等主流阅读器。
+        </p>
+        <a
+          href="/rss.xml"
+          class="inline-flex items-center gap-1.5 px-4 py-2 bg-orange-500 text-white text-sm rounded-lg hover:bg-orange-600 transition-colors no-underline"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 11a9 9 0 0 1 9 9" />
+            <path d="M4 4a16 16 0 0 1 16 16" />
+            <circle cx="5" cy="19" r="1" />
+          </svg>
+          订阅 RSS
+        </a>
+      </div>
+
+      <div class="bg-white border border-gray-200 rounded-lg p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-2">GitHub Watch</h2>
+        <p class="text-sm text-gray-600">
+          如果您是开发者，也可以在 GitHub 上 Watch 本项目的源代码仓库，在政策数据更新时收到通知。
+        </p>
+      </div>
+
+      <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-800">
+        <strong>注意：</strong>邮箱订阅功能正在开发中，敬请期待。
+      </div>
+    </div>
+  </div>
+</BaseLayout>

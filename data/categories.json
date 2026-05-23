@@ -1,0 +1,143 @@
+[
+  {
+    "id": "salary",
+    "name": "工资薪酬",
+    "description": "最低工资、工资指导线、工资支付、绩效工资等",
+    "icon": "💰",
+    "order": 1,
+    "subcategories": [
+      { "id": "salary-minimum", "name": "最低工资", "description": "最低工资标准调整" },
+      { "id": "salary-guide", "name": "工资指导线", "description": "企业工资指导线" },
+      { "id": "salary-payment", "name": "工资支付", "description": "工资支付规定、拖欠工资" },
+      { "id": "salary-performance", "name": "绩效工资", "description": "绩效工资制度" }
+    ]
+  },
+  {
+    "id": "social-insurance",
+    "name": "社会保险",
+    "description": "养老保险、医疗保险、工伤保险、失业保险、生育保险",
+    "icon": "🛡️",
+    "order": 2,
+    "subcategories": [
+      { "id": "si-pension", "name": "养老保险", "description": "基本养老保险、个人养老金" },
+      { "id": "si-medical", "name": "医疗保险", "description": "职工医保、城乡居民医保" },
+      { "id": "si-work-injury", "name": "工伤保险", "description": "工伤认定、待遇标准" },
+      { "id": "si-unemployment", "name": "失业保险", "description": "失业保险金、稳岗返还" },
+      { "id": "si-maternity", "name": "生育保险", "description": "生育津贴、生育医疗" }
+    ]
+  },
+  {
+    "id": "housing-fund",
+    "name": "住房公积金",
+    "description": "缴存比例、提取、贷款等政策",
+    "icon": "🏠",
+    "order": 3,
+    "subcategories": [
+      { "id": "hf-contribution", "name": "缴存比例", "description": "缴存基数与比例调整" },
+      { "id": "hf-withdrawal", "name": "提取", "description": "公积金提取条件与流程" },
+      { "id": "hf-loan", "name": "贷款", "description": "公积金贷款政策" }
+    ]
+  },
+  {
+    "id": "labor-contract",
+    "name": "劳动合同",
+    "description": "劳动合同签订、变更、解除、终止、劳务派遣",
+    "icon": "📄",
+    "order": 4,
+    "subcategories": [
+      { "id": "lc-sign", "name": "签订与变更", "description": "合同签订、内容变更" },
+      { "id": "lc-termination", "name": "解除与终止", "description": "合同解除、终止、经济补偿" },
+      { "id": "lc-dispatch", "name": "劳务派遣", "description": "劳务派遣规定" }
+    ]
+  },
+  {
+    "id": "work-hours",
+    "name": "工时休假",
+    "description": "标准工时、综合工时、加班费、年休假、法定假日",
+    "icon": "⏰",
+    "order": 5,
+    "subcategories": [
+      { "id": "wh-hours", "name": "工时制度", "description": "标准工时、综合计算工时" },
+      { "id": "wh-overtime", "name": "加班费", "description": "加班工资计算标准" },
+      { "id": "wh-leave", "name": "休假制度", "description": "年休假、婚假、产假等" }
+    ]
+  },
+  {
+    "id": "labor-protection",
+    "name": "劳动保护",
+    "description": "职业安全、职业病防治、女职工保护、未成年工保护",
+    "icon": "🔒",
+    "order": 6,
+    "subcategories": [
+      { "id": "lp-safety", "name": "职业安全", "description": "安全生产、职业健康" },
+      { "id": "lp-occupational", "name": "职业病防治", "description": "职业病目录、防治措施" },
+      { "id": "lp-female", "name": "女职工保护", "description": "女职工特殊劳动保护" }
+    ]
+  },
+  {
+    "id": "labor-inspection",
+    "name": "劳动监察",
+    "description": "监察执法、处罚标准、投诉举报",
+    "icon": "🔍",
+    "order": 7,
+    "subcategories": []
+  },
+  {
+    "id": "dispute-resolution",
+    "name": "争议仲裁",
+    "description": "劳动仲裁、诉讼、调解",
+    "icon": "⚖️",
+    "order": 8,
+    "subcategories": [
+      { "id": "dr-arbitration", "name": "劳动仲裁", "description": "仲裁程序与裁决" },
+      { "id": "dr-litigation", "name": "诉讼", "description": "劳动争议诉讼" },
+      { "id": "dr-mediation", "name": "调解", "description": "劳动争议调解" }
+    ]
+  },
+  {
+    "id": "employment",
+    "name": "就业促进",
+    "description": "稳岗补贴、就业援助、创业扶持",
+    "icon": "💼",
+    "order": 9,
+    "subcategories": [
+      { "id": "emp-stabilization", "name": "稳岗补贴", "description": "稳岗返还、扩岗补助" },
+      { "id": "emp-aid", "name": "就业援助", "description": "就业困难人员帮扶" },
+      { "id": "emp-entrepreneurship", "name": "创业扶持", "description": "创业担保贷款等" }
+    ]
+  },
+  {
+    "id": "training",
+    "name": "职业培训",
+    "description": "技能提升、继续教育、职业技能等级",
+    "icon": "📚",
+    "order": 10,
+    "subcategories": [
+      { "id": "tr-skill", "name": "技能提升", "description": "职业技能培训、补贴" },
+      { "id": "tr-certification", "name": "技能等级", "description": "职业技能等级认定" }
+    ]
+  },
+  {
+    "id": "talent",
+    "name": "人才政策",
+    "description": "人才引进、职称评审、高层次人才",
+    "icon": "⭐",
+    "order": 11,
+    "subcategories": [
+      { "id": "tl-introduction", "name": "人才引进", "description": "人才引进政策" },
+      { "id": "tl-title", "name": "职称评审", "description": "职称制度改革" }
+    ]
+  },
+  {
+    "id": "retirement",
+    "name": "退休养老",
+    "description": "退休年龄、养老金调整、企业年金",
+    "icon": "👴",
+    "order": 12,
+    "subcategories": [
+      { "id": "rt-age", "name": "退休年龄", "description": "退休年龄规定与延迟退休" },
+      { "id": "rt-pension", "name": "养老金调整", "description": "基本养老金调整" },
+      { "id": "rt-annuity", "name": "企业年金", "description": "企业年金与职业年金" }
+    ]
+  }
+]

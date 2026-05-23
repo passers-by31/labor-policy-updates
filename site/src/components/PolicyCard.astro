@@ -1,0 +1,68 @@
+---
+import type { Policy } from "../lib/types";
+import { formatDate, statusLabel, statusColor } from "../lib/utils";
+import { getCategoryById } from "../lib/categories";
+
+export interface Props {
+  policy: Policy;
+}
+
+const { policy } = Astro.props;
+const category = getCategoryById(policy.category);
+const sourceColors: Record<string, string> = {
+  mohrss: "bg-blue-100 text-blue-800",
+  govcn: "bg-red-100 text-red-800",
+  nhsa: "bg-green-100 text-green-800",
+  chinatax: "bg-yellow-100 text-yellow-800",
+};
+const sourceColor = sourceColors[policy.sourceId] || "bg-gray-100 text-gray-800";
+---
+
+<a
+  href={`/policies/${policy.id}`}
+  class="block bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md hover:border-blue-300 transition-all no-underline text-inherit"
+>
+  <div class="flex items-start justify-between gap-3">
+    <h3 class="text-base font-semibold text-gray-900 leading-snug mb-1 flex-1">
+      {policy.title}
+    </h3>
+    {policy.documentNumber && (
+      <span class="text-xs text-gray-400 whitespace-nowrap shrink-0">
+        {policy.documentNumber}
+      </span>
+    )}
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2 mt-2 text-xs">
+    <span class={"px-2 py-0.5 rounded " + sourceColor}>{policy.sourceName}</span>
+    {policy.publishDate && (
+      <span class="text-gray-500">{formatDate(policy.publishDate)}</span>
+    )}
+    {policy.status !== "effective" && (
+      <span class={"px-2 py-0.5 rounded " + statusColor(policy.status)}>
+        {statusLabel(policy.status)}
+      </span>
+    )}
+    {category && (
+      <span class="px-2 py-0.5 rounded bg-purple-100 text-purple-700">
+        {category.name}
+      </span>
+    )}
+  </div>
+
+  {policy.summary && (
+    <p class="text-sm text-gray-600 mt-2 line-clamp-2 leading-relaxed">
+      {policy.summary}
+    </p>
+  )}
+
+  {policy.tags && policy.tags.length > 0 && (
+    <div class="flex flex-wrap gap-1.5 mt-2">
+      {policy.tags.slice(0, 4).map((tag) => (
+        <span class="text-xs px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded">
+          {tag}
+        </span>
+      ))}
+    </div>
+  )}
+</a>

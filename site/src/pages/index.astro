@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SearchBar from "../components/SearchBar.astro";
+import CategoryNav from "../components/CategoryNav.astro";
+import PolicyCard from "../components/PolicyCard.astro";
+import StatsBar from "../components/StatsBar.astro";
+import SubscribeButton from "../components/SubscribeButton.astro";
+import { getAllPolicies, getPolicyStats } from "../lib/policies";
+import { getAllCategories } from "../lib/categories";
+
+const categories = getAllCategories();
+const policies = getAllPolicies();
+const stats = getPolicyStats();
+const recentPolicies = policies.slice(0, 10);
+---
+
+<BaseLayout title="首页" description="自动采集国内劳动相关政策法规通知更新，助您及时掌握政策动态">
+  <!-- 搜索区 -->
+  <section class="bg-gradient-to-b from-blue-50 to-white py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+        劳动政策更新
+      </h1>
+      <p class="text-gray-600 mb-6">
+        自动采集国内劳动相关政策法规通知更新，助您及时掌握政策动态
+      </p>
+      <div class="max-w-2xl mx-auto">
+        <SearchBar large />
+      </div>
+      <div class="mt-6 flex justify-center">
+        <SubscribeButton />
+      </div>
+    </div>
+  </section>
+
+  <!-- 统计 -->
+  <section class="max-w-6xl mx-auto px-4 -mt-6 relative z-10">
+    <StatsBar
+      totalPolicies={stats.total}
+      sourceCount={stats.sourceCount}
+      categoryCount={categories.length}
+    />
+  </section>
+
+  <!-- 分类导航 -->
+  <section class="max-w-6xl mx-auto px-4 py-10">
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">政策分类</h2>
+    <CategoryNav mode="card" />
+  </section>
+
+  <!-- 最新政策 -->
+  <section class="max-w-6xl mx-auto px-4 pb-10">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold text-gray-900">最新政策</h2>
+      <a href="/policies" class="text-sm text-blue-600 hover:text-blue-800 no-underline">
+        查看全部 &rarr;
+      </a>
+    </div>
+    {recentPolicies.length > 0 ? (
+      <div class="space-y-3">
+        {recentPolicies.map((p) => <PolicyCard policy={p} />)}
+      </div>
+    ) : (
+      <div class="text-center py-12 text-gray-400">
+        <p>暂无政策数据。爬虫需联网运行获取数据。</p>
+        <p class="text-sm mt-1">部署后将每日自动采集。</p>
+      </div>
+    )}
+  </section>
+</BaseLayout>

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "mohrss",
+    "name": "人力资源和社会保障部",
+    "url": "https://www.mohrss.gov.cn",
+    "region": "全国",
+    "level": "national"
+  },
+  {
+    "id": "govcn",
+    "name": "中央人民政府（国务院）",
+    "url": "https://www.gov.cn",
+    "region": "全国",
+    "level": "national"
+  },
+  {
+    "id": "nhsa",
+    "name": "国家医疗保障局",
+    "url": "https://www.nhsa.gov.cn",
+    "region": "全国",
+    "level": "national"
+  },
+  {
+    "id": "chinatax",
+    "name": "国家税务总局",
+    "url": "https://www.chinatax.gov.cn",
+    "region": "全国",
+    "level": "national"
+  }
+]
