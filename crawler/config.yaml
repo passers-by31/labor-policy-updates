@@ -1,107 +1,137 @@
-# ============================================
-# 爬虫全局配置
-# ============================================
-
 general:
-  output_dir: "../data"
+  output_dir: ../data
   request_timeout: 30
   max_retries: 3
   batch_size: 50
   user_agents:
-    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15"
-    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0"
-    - "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
-    - "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
-
-# ============================================
-# 目标站点配置
-# ============================================
-
+  - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
+    Chrome/125.0.0.0 Safari/537.36
+  - Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 (KHTML, like
+    Gecko) Version/17.5 Safari/605.1.15
+  - Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
+    Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0
+  - Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0
+    Safari/537.36
+  - Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML,
+    like Gecko) Version/17.5 Mobile/15E148 Safari/604.1
 sources:
-  - id: mohrss
-    name: "人力资源和社会保障部"
-    base_url: "https://www.mohrss.gov.cn"
-    encoding: "utf-8"
-    region: "全国"
-    # 站点启用了 Tencent EdgeOne 反爬，暂无法用 requests 直接抓取
-    active: false
-    crawl_interval_hours: 24
-    list_pages:
-      - url: "https://www.mohrss.gov.cn/xxgk2020/fdzdgknr/zcfg/"
-        name: "政策法规"
-        list_selector: "ul.list-list li a"
-        title_attr: "text"
-        link_attr: "href"
-        page_param: "index.html"
-        max_pages: 1
-    detail_rules:
-      title_selector: "div.content-title h1, div.article-title h1"
-      content_selector: "div.TRS_Editor, div.content-body, div.article-content"
-      publish_date_selector: "div.content-info span.date, div.article-info span.date"
-      document_number_selector: "div.content-info, div.article-info"
-
-  - id: govcn
-    name: "中央人民政府（国务院）"
-    base_url: "https://www.gov.cn"
-    encoding: "utf-8"
-    region: "全国"
-    active: true
-    crawl_interval_hours: 24
-    list_pages:
-      - url: "https://www.gov.cn/zhengce/zuixin/ZUIXINZHENGCE.json"
-        name: "最新政策（JSON API）"
-        max_pages: 1
-
-  - id: nhsa
-    name: "国家医疗保障局"
-    base_url: "https://www.nhsa.gov.cn"
-    encoding: "utf-8"
-    region: "全国"
-    active: true
-    crawl_interval_hours: 48
-    list_pages:
-      - url: "https://www.nhsa.gov.cn/col/col14/index.html"
-        name: "医保动态"
-        list_selector: "div.mainbody li a"
-        title_attr: "text"
-        link_attr: "href"
-        # TRS 系统使用 AJAX 分页，仅首页包含全部 45 条数据
-        max_pages: 1
-    detail_rules:
-      title_selector: "div.atricle-title"
-      content_selector: "div#zoom"
-      publish_date_selector: "span.wzy-rq"
-      document_number_selector: ""
-
-  - id: chinatax
-    name: "国家税务总局"
-    base_url: "https://www.chinatax.gov.cn"
-    encoding: "utf-8"
-    region: "全国"
-    # 内容以税务政策为主，与劳动政策相关性低，暂不启用
-    active: false
-    crawl_interval_hours: 48
-    list_pages:
-      - url: "https://www.chinatax.gov.cn/chinatax/n810341/n810755/index.html"
-        name: "社保费政策"
-        list_selector: "ul.list li a"
-        title_attr: "text"
-        link_attr: "href"
-        max_pages: 3
-    detail_rules:
-      title_selector: "div.content h1"
-      content_selector: "div.content, div.TRS_Editor"
-      publish_date_selector: "div.info span"
-      document_number_selector: "div.info"
-
+- id: mohrss
+  name: 人力资源和社会保障部
+  base_url: https://www.mohrss.gov.cn
+  encoding: utf-8
+  region: 全国
+  active: false
+  crawl_interval_hours: 24
+  list_pages:
+  - url: https://www.mohrss.gov.cn/xxgk2020/fdzdgknr/zcfg/
+    name: 政策法规
+    list_selector: ul.list-list li a
+    max_pages: 1
+  detail_rules:
+    title_selector: div.content-title h1, div.article-title h1
+    content_selector: div.TRS_Editor, div.content-body, div.article-content
+    publish_date_selector: div.content-info span.date, div.article-info span.date
+    document_number_selector: div.content-info, div.article-info
+- id: govcn
+  name: 中央人民政府（国务院）
+  base_url: https://www.gov.cn
+  encoding: utf-8
+  region: 全国
+  active: true
+  crawl_interval_hours: 24
+  list_pages:
+  - url: https://www.gov.cn/zhengce/zuixin/ZUIXINZHENGCE.json
+    name: 最新政策（JSON API）
+    max_pages: 1
+  - url: https://www.gov.cn/zhengce/zuixin.htm
+    name: 最新政策（HTML）
+    list_selector: ul.list_tab li a
+    max_pages: 1
+  detail_rules: &id001
+    title_selector: div.content-title h1, div.article-title h1, h1
+    content_selector: div.TRS_Editor, div.content-body, div.article-content
+    publish_date_selector: div.content-info span.date, div.article-info span.date
+    document_number_selector: div.content-info, div.article-info
+- id: nhsa
+  name: 国家医疗保障局
+  base_url: https://www.nhsa.gov.cn
+  encoding: utf-8
+  region: 全国
+  active: true
+  crawl_interval_hours: 48
+  list_pages:
+  - url: https://www.nhsa.gov.cn/col/col14/index.html
+    name: 医保动态
+    list_selector: div.mainbody li a
+    max_pages: 1
+  detail_rules:
+    title_selector: div.atricle-title
+    content_selector: div#zoom
+    publish_date_selector: span.wzy-rq
+    document_number_selector: ''
+- id: chinatax
+  name: 国家税务总局
+  base_url: https://www.chinatax.gov.cn
+  encoding: utf-8
+  region: 全国
+  active: false
+  crawl_interval_hours: 48
+  list_pages:
+  - url: https://www.chinatax.gov.cn/chinatax/n810341/n810755/index.html
+    name: 社保费政策
+    list_selector: ul.list li a
+    max_pages: 3
+  detail_rules:
+    title_selector: div.content h1
+    content_selector: div.content, div.TRS_Editor
+    publish_date_selector: div.info span
+    document_number_selector: div.info
+- id: guangdong-chinatax
+  name: 国家税务总局广州市税务局
+  base_url: https://guangdong.chinatax.gov.cn/gdsw/gzsw/gzsw_index.shtml
+  encoding: utf-8
+  region: 全国
+  active: true
+  crawl_interval_hours: 48
+  list_pages:
+  - url: https://guangdong.chinatax.gov.cn/gdsw/gzsw/gzsw_index.shtml
+    name: 国家税务总局广州市税务局
+    list_selector: ul.list-list li a, ul.list li a, div.news-list li a
+    max_pages: 1
+  detail_rules: *id001
+- id: shanghai-chinatax
+  name: 国家税务总局上海市税务局
+  base_url: https://shanghai.chinatax.gov.cn
+  encoding: utf-8
+  region: 全国
+  active: true
+  crawl_interval_hours: 48
+  list_pages:
+  - url: https://shanghai.chinatax.gov.cn
+    name: 国家税务总局上海市税务局
+    list_selector: ul.list-list li a, ul.list li a, div.news-list li a
+    max_pages: 1
+  detail_rules: *id001
+- id: banshi-beijing
+  name: 北京市政务服务网
+  base_url: https://banshi.beijing.gov.cn
+  encoding: utf-8
+  region: 全国
+  active: true
+  crawl_interval_hours: 48
+  list_pages:
+  - url: https://banshi.beijing.gov.cn
+    name: 北京市政务服务网
+    list_selector: ul.list-list li a, ul.list li a, div.news-list li a
+    max_pages: 1
+  detail_rules: *id001
 province_defaults:
   active: false
   crawl_interval_hours: 72
-  encoding: "utf-8"
-  list_selector: "ul.list-list li a, ul.list li a, div.news-list li a"
+  encoding: utf-8
+  list_selector: ul.list-list li a, ul.list li a, div.news-list li a
   detail_rules:
-    title_selector: "div.content-title h1, div.article-title h1, h1"
-    content_selector: "div.TRS_Editor, div.content-body, div.article-content"
-    publish_date_selector: "div.content-info span.date, div.article-info span.date"
-    document_number_selector: "div.content-info, div.article-info"
+    title_selector: div.content-title h1, div.article-title h1, h1
+    content_selector: div.TRS_Editor, div.content-body, div.article-content
+    publish_date_selector: div.content-info span.date, div.article-info span.date
+    document_number_selector: div.content-info, div.article-info

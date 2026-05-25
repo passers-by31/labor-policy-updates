@@ -26,5 +26,26 @@
     "url": "https://www.chinatax.gov.cn",
     "region": "全国",
     "level": "national"
+  },
+  {
+    "id": "guangdong-chinatax",
+    "name": "国家税务总局广州市税务局",
+    "url": "https://guangdong.chinatax.gov.cn/gdsw/gzsw/gzsw_index.shtml",
+    "region": "全国",
+    "level": "national"
+  },
+  {
+    "id": "shanghai-chinatax",
+    "name": "国家税务总局上海市税务局",
+    "url": "https://shanghai.chinatax.gov.cn",
+    "region": "全国",
+    "level": "national"
+  },
+  {
+    "id": "banshi-beijing",
+    "name": "北京市政务服务网",
+    "url": "https://banshi.beijing.gov.cn",
+    "region": "全国",
+    "level": "national"
   }
 ]
