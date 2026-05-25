@@ -13,6 +13,7 @@ const sources: Source[] = JSON.parse(sourcesRaw);
 
 const policies = getAllPolicies();
 const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "江苏省"];
+const allMonths = [...new Set(policies.map(p => (p.publishDate || "").slice(0, 7)).filter(Boolean))].sort().reverse();
 ---
 
 <BaseLayout title="政策列表">
@@ -49,6 +50,14 @@ const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "
                 {r}
               </label>
             ))}
+          </div>
+
+          <div>
+            <h4 class="text-sm font-semibold text-gray-700 mb-2">月份</h4>
+            <select id="month-select" class="text-sm border border-gray-300 rounded px-2 py-1 w-full">
+              <option value="">全部月份</option>
+              {allMonths.map(m => <option value={m}>{m.replace('-', '年')}月</option>)}
+            </select>
           </div>
         </div>
       </aside>
@@ -133,8 +142,6 @@ const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "
   // @ts-nocheck
   const policies = JSON.parse(document.getElementById('policies-data')?.textContent || '[]');
   const PAGE_SIZE = 20;
-  const params = new URLSearchParams(location.search);
-  const monthFilter = params.get('month');
   let filtered = [...policies];
   let currentPage = 1;
 
@@ -202,6 +209,8 @@ const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "
       else if (type === 'region') selectedRegions.push(value);
     });
 
+    const monthFilter = document.getElementById('month-select').value;
+
     filtered = policies.filter(p => {
       if (selectedSources.length > 0 && !selectedSources.includes(p.sourceId)) return false;
       if (selectedRegions.length > 0 && !selectedRegions.some(r => (p.regions || []).includes(r))) return false;
@@ -214,7 +223,13 @@ const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    if (monthFilter) applyFilters();
+    const params = new URLSearchParams(location.search);
+    const monthParam = params.get('month');
+    const monthSelect = document.getElementById('month-select');
+    if (monthParam && monthSelect) {
+      monthSelect.value = monthParam;
+      applyFilters();
+    }
     document.querySelectorAll('.filter-checkbox').forEach(cb => {
       cb.addEventListener('change', applyFilters);
     });
@@ -224,6 +239,7 @@ const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "
       const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
       if (currentPage < totalPages) { currentPage++; renderList(); }
     });
+    monthSelect?.addEventListener('change', applyFilters);
   });
 </script>
 
