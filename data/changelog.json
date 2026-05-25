@@ -1,1 +1,15 @@
-[]
+[
+  {
+    "date": "2026-05-25",
+    "timestamp": "2026-05-25T05:24:20.474883",
+    "newCount": 3,
+    "updatedCount": 0,
+    "totalCount": 51,
+    "newPolicies": [
+      "nhsa-aea22bbe",
+      "nhsa-0dcb0a80",
+      "nhsa-858fb5ba"
+    ],
+    "summary": "新增 3 条政策"
+  }
+]
