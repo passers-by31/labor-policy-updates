@@ -133,6 +133,8 @@ const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "
   // @ts-nocheck
   const policies = JSON.parse(document.getElementById('policies-data')?.textContent || '[]');
   const PAGE_SIZE = 20;
+  const params = new URLSearchParams(location.search);
+  const monthFilter = params.get('month');
   let filtered = [...policies];
   let currentPage = 1;
 
@@ -203,6 +205,7 @@ const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "
     filtered = policies.filter(p => {
       if (selectedSources.length > 0 && !selectedSources.includes(p.sourceId)) return false;
       if (selectedRegions.length > 0 && !selectedRegions.some(r => (p.regions || []).includes(r))) return false;
+      if (monthFilter && !(p.publishDate || '').startsWith(monthFilter)) return false;
       return true;
     });
 

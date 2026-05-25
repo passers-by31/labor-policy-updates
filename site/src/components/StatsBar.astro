@@ -6,6 +6,7 @@ export interface Props {
 }
 
 const { totalPolicies, sourceCount, thisMonthCount = 0 } = Astro.props;
+const thisMonth = `${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, "0")}`;
 ---
 
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -17,8 +18,8 @@ const { totalPolicies, sourceCount, thisMonthCount = 0 } = Astro.props;
     <div class="text-2xl font-bold text-green-600">{sourceCount}</div>
     <div class="text-sm text-gray-500 mt-1">数据来源</div>
   </div>
-  <div class="bg-white rounded-lg border border-gray-200 p-4 text-center">
+  <a href={"/policies?month=" + thisMonth} class="bg-white rounded-lg border border-gray-200 p-4 text-center no-underline block hover:shadow-md hover:border-orange-300 transition-all">
     <div class="text-2xl font-bold text-orange-600">{thisMonthCount > 0 ? thisMonthCount : '-'}</div>
     <div class="text-sm text-gray-500 mt-1">本月新增</div>
-  </div>
+  </a>
 </div>
