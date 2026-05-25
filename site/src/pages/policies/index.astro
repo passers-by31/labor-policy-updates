@@ -214,6 +214,7 @@ const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    if (monthFilter) applyFilters();
     document.querySelectorAll('.filter-checkbox').forEach(cb => {
       cb.addEventListener('change', applyFilters);
     });
