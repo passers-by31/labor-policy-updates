@@ -26,7 +26,6 @@ if (existsSync(dataPath)) {
       .trim()
       .substring(0, 3000),
     publishDate: p.publishDate || "",
-    category: p.category || "",
     sourceId: p.sourceId || "",
   }));
 }

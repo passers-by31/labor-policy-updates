@@ -5,7 +5,7 @@ set -e
 cd /Volumes/Samsung970/claude/labor-policy-updates
 
 # 同步书签到配置
-/usr/bin/python3 crawler/sync_bookmarks.py --mode read \
+/Library/Frameworks/Python.framework/Versions/3.11/bin/python3 crawler/sync_bookmarks.py --mode read \
   --bookmarks "$HOME/Library/Application Support/Google/Chrome/Profile 2/AccountBookmarks" \
   --config crawler/config.yaml
 

@@ -24,21 +24,6 @@ export interface Policy {
   isNew: boolean;
 }
 
-export interface Category {
-  id: string;
-  name: string;
-  description: string;
-  icon: string;
-  order: number;
-  subcategories: SubCategory[];
-}
-
-export interface SubCategory {
-  id: string;
-  name: string;
-  description: string;
-}
-
 export interface Source {
   id: string;
   name: string;

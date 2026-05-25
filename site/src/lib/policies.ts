@@ -31,10 +31,6 @@ export function getPolicyById(id: string): Policy | undefined {
   return loadPolicies().find((p) => p.id === id);
 }
 
-export function getPoliciesByCategory(category: string): Policy[] {
-  return loadPolicies().filter((p) => p.category === category);
-}
-
 export function getPoliciesBySource(sourceId: string): Policy[] {
   return loadPolicies().filter((p) => p.sourceId === sourceId);
 }
@@ -50,14 +46,11 @@ export function getPoliciesByRegion(region: string): Policy[] {
 export function getPolicyStats(): {
   total: number;
   sourceCount: number;
-  categoryCount: number;
 } {
   const policies = loadPolicies();
   const sources = new Set(policies.map((p) => p.sourceId));
-  const categories = new Set(policies.map((p) => p.category));
   return {
     total: policies.length,
     sourceCount: sources.size,
-    categoryCount: categories.size,
   };
 }

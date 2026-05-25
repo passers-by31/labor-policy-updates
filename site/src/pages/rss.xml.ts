@@ -16,7 +16,6 @@ export const GET: APIRoute = async (context) => {
       pubDate: new Date(p.publishDate || p.crawlDate),
       description: p.summary || p.title,
       link: `/policies/${p.id}/`,
-      categories: [p.category, ...(p.subcategory ? [p.subcategory] : [])],
     })),
   });
 };

@@ -1,14 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SearchBar from "../components/SearchBar.astro";
-import CategoryNav from "../components/CategoryNav.astro";
 import PolicyCard from "../components/PolicyCard.astro";
 import StatsBar from "../components/StatsBar.astro";
 import SubscribeButton from "../components/SubscribeButton.astro";
 import { getAllPolicies, getPolicyStats } from "../lib/policies";
-import { getAllCategories } from "../lib/categories";
 
-const categories = getAllCategories();
 const policies = getAllPolicies();
 const stats = getPolicyStats();
 const recentPolicies = policies.slice(0, 10);
@@ -38,14 +35,7 @@ const recentPolicies = policies.slice(0, 10);
     <StatsBar
       totalPolicies={stats.total}
       sourceCount={stats.sourceCount}
-      categoryCount={categories.length}
     />
-  </section>
-
-  <!-- 分类导航 -->
-  <section class="max-w-6xl mx-auto px-4 py-10">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">政策分类</h2>
-    <CategoryNav mode="card" />
   </section>
 
   <!-- 最新政策 -->

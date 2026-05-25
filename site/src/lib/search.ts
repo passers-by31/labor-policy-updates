@@ -8,7 +8,6 @@ export interface SearchDoc {
   documentNumber: string;
   content: string;
   publishDate: string;
-  category: string;
   sourceId: string;
 }
 
@@ -42,7 +41,6 @@ export async function loadSearchIndex(): Promise<void> {
         "title",
         "summary",
         "publishDate",
-        "category",
         "sourceId",
         "tags",
         "documentNumber",
@@ -56,7 +54,6 @@ export async function loadSearchIndex(): Promise<void> {
 }
 
 export interface SearchFilters {
-  category?: string;
   sourceId?: string;
 }
 
@@ -97,9 +94,6 @@ export async function search(
 
   let results = merged;
 
-  if (filters?.category) {
-    results = results.filter((d) => d.category === filters.category);
-  }
   if (filters?.sourceId) {
     results = results.filter((d) => d.sourceId === filters.sourceId);
   }

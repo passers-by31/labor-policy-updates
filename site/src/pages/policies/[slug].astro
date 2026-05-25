@@ -2,7 +2,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
 import { getAllPolicies, getPolicyById } from "../../lib/policies";
-import { getCategoryById } from "../../lib/categories";
 import { formatDate, statusLabel, statusColor } from "../../lib/utils";
 import type { Policy } from "../../lib/types";
 
@@ -16,7 +15,6 @@ export async function getStaticPaths() {
 
 const { policy } = Astro.props as { policy: Policy };
 
-const category = policy.category ? getCategoryById(policy.category) : undefined;
 const relatedPolicies = policy.relatedPolicyIds && policy.relatedPolicyIds.length > 0
   ? policy.relatedPolicyIds.map(id => getPolicyById(id)).filter(Boolean) as Policy[]
   : [];
