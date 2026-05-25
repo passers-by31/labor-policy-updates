@@ -1,0 +1,80 @@
+# ============================================
+# Chrome 书签 → 爬虫配置 默认值与覆盖规则
+# 书签只记录名称和 URL，缺少的爬虫配置项从这里补充
+# ============================================
+
+# 域名 → ID 映射（保持爬虫 spider_map 兼容的 ID）
+domain_id_map:
+  "www.gov.cn": "govcn"
+
+# 全局默认值
+defaults:
+  encoding: utf-8
+  region: 全国
+  active: true
+  crawl_interval_hours: 48
+  list_selector: "ul.list-list li a, ul.list li a, div.news-list li a"
+  max_pages: 1
+  detail_rules:
+    title_selector: "div.content-title h1, div.article-title h1, h1"
+    content_selector: "div.TRS_Editor, div.content-body, div.article-content"
+    publish_date_selector: "div.content-info span.date, div.article-info span.date"
+    document_number_selector: "div.content-info, div.article-info"
+
+# 特定域名覆盖规则
+overrides:
+  # 人力资源和社会保障部
+  "www.mohrss.gov.cn":
+    active: false
+    crawl_interval_hours: 24
+    list_pages:
+      - url: "https://www.mohrss.gov.cn/xxgk2020/fdzdgknr/zcfg/"
+        name: "政策法规"
+        list_selector: "ul.list-list li a"
+        max_pages: 1
+    detail_rules:
+      title_selector: "div.content-title h1, div.article-title h1"
+      content_selector: "div.TRS_Editor, div.content-body, div.article-content"
+      publish_date_selector: "div.content-info span.date, div.article-info span.date"
+      document_number_selector: "div.content-info, div.article-info"
+
+  # 中央人民政府（国务院）
+  "www.gov.cn":
+    crawl_interval_hours: 24
+    list_pages:
+      - url: "https://www.gov.cn/zhengce/zuixin/ZUIXINZHENGCE.json"
+        name: "最新政策（JSON API）"
+        max_pages: 1
+      - url: "https://www.gov.cn/zhengce/zuixin.htm"
+        name: "最新政策（HTML）"
+        list_selector: "ul.list_tab li a"
+        max_pages: 1
+
+  # 国家医疗保障局
+  "www.nhsa.gov.cn":
+    crawl_interval_hours: 48
+    list_pages:
+      - url: "https://www.nhsa.gov.cn/col/col14/index.html"
+        name: "医保动态"
+        list_selector: "div.mainbody li a"
+        max_pages: 1
+    detail_rules:
+      title_selector: "div.atricle-title"
+      content_selector: "div#zoom"
+      publish_date_selector: "span.wzy-rq"
+      document_number_selector: ""
+
+  # 国家税务总局
+  "www.chinatax.gov.cn":
+    active: false
+    crawl_interval_hours: 48
+    list_pages:
+      - url: "https://www.chinatax.gov.cn/chinatax/n810341/n810755/index.html"
+        name: "社保费政策"
+        list_selector: "ul.list li a"
+        max_pages: 3
+    detail_rules:
+      title_selector: "div.content h1"
+      content_selector: "div.content, div.TRS_Editor"
+      publish_date_selector: "div.info span"
+      document_number_selector: "div.info"
