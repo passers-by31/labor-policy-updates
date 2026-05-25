@@ -46,11 +46,18 @@ export function getPoliciesByRegion(region: string): Policy[] {
 export function getPolicyStats(): {
   total: number;
   sourceCount: number;
+  thisMonthCount: number;
 } {
   const policies = loadPolicies();
   const sources = new Set(policies.map((p) => p.sourceId));
+  const now = new Date();
+  const thisMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  const thisMonthCount = policies.filter((p) =>
+    (p.publishDate || "").startsWith(thisMonth)
+  ).length;
   return {
     total: policies.length,
     sourceCount: sources.size,
+    thisMonthCount,
   };
 }
