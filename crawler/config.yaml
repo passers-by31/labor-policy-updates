@@ -23,17 +23,12 @@ sources:
   active: true
   crawl_interval_hours: 24
   list_pages:
-  - url: https://www.mohrss.gov.cn/xxgk2020/zcwjk/
-    name: 政策文件库
-    list_selector: ul.list-list li a
+  - url: https://www.mohrss.gov.cn/xxgk2020/fdzdgknr/zcjd/
+    name: 政策解读
+    list_selector: ul.rsb_con_rightUl li a
     max_pages: 1
-  detail_rules:
-    title_selector: div.content-title h1, div.article-title h1
-    content_selector: div.TRS_Editor, div.content-body, div.article-content
-    publish_date_selector: div.content-info span.date, div.article-info span.date
-    document_number_selector: div.content-info, div.article-info
-  # 注意: 该站点有反爬 JS 验证，如果爬取失败是正常现象
-  # 可以尝试改用 selenium/playwright 等浏览器自动化方案
+  # MohrssSpider 内置自定义解析（含 Tencent EdgeOne 反爬绕过）
+  # 如需抓取原始政策文件可添加 /xxgk2020/fdzdgknr/zcfg/gfxwj/ldgx/
 - id: govcn
   name: 中央人民政府（国务院）
   base_url: https://www.gov.cn
