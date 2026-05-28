@@ -2,7 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SearchBar from "../../components/SearchBar.astro";
 import Breadcrumb from "../../components/Breadcrumb.astro";
-import { getAllPolicies } from "../../lib/policies";
+import { getAllPolicies, getLatestCrawlInfo } from "../../lib/policies";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Source, Policy } from "../../lib/types";
@@ -14,6 +14,7 @@ const sources: Source[] = JSON.parse(sourcesRaw);
 const policies = getAllPolicies();
 const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "江苏省"];
 const allMonths = [...new Set(policies.map(p => (p.publishDate || "").slice(0, 7)).filter(Boolean))].sort().reverse();
+const latestCrawl = getLatestCrawlInfo();
 ---
 
 <BaseLayout title="政策列表">
@@ -225,10 +226,16 @@ const allMonths = [...new Set(policies.map(p => (p.publishDate || "").slice(0, 7
   document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(location.search);
     const monthParam = params.get('month');
+    const crawlParam = params.get('crawl');
     const monthSelect = document.getElementById('month-select');
     if (monthParam && monthSelect) {
       monthSelect.value = monthParam;
       applyFilters();
+    }
+    if (crawlParam === 'latest') {
+      const crawlPolicies = JSON.parse(document.getElementById('crawl-policies-data')?.textContent || '[]');
+      filtered = policies.filter(p => crawlPolicies.includes(p.id));
+      renderList();
     }
     document.querySelectorAll('.filter-checkbox').forEach(cb => {
       cb.addEventListener('change', applyFilters);
@@ -244,3 +251,4 @@ const allMonths = [...new Set(policies.map(p => (p.publishDate || "").slice(0, 7
 </script>
 
 <script type="application/json" id="policies-data">{JSON.stringify(policies)}</script>
+<script type="application/json" id="crawl-policies-data">{JSON.stringify(latestCrawl.newPolicies)}</script>
