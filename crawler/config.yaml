@@ -20,11 +20,11 @@ sources:
   base_url: https://www.mohrss.gov.cn
   encoding: utf-8
   region: 全国
-  active: false
+  active: true
   crawl_interval_hours: 24
   list_pages:
-  - url: https://www.mohrss.gov.cn/xxgk2020/fdzdgknr/zcfg/
-    name: 政策法规
+  - url: https://www.mohrss.gov.cn/xxgk2020/zcwjk/
+    name: 政策文件库
     list_selector: ul.list-list li a
     max_pages: 1
   detail_rules:
@@ -32,6 +32,8 @@ sources:
     content_selector: div.TRS_Editor, div.content-body, div.article-content
     publish_date_selector: div.content-info span.date, div.article-info span.date
     document_number_selector: div.content-info, div.article-info
+  # 注意: 该站点有反爬 JS 验证，如果爬取失败是正常现象
+  # 可以尝试改用 selenium/playwright 等浏览器自动化方案
 - id: govcn
   name: 中央人民政府（国务院）
   base_url: https://www.gov.cn
@@ -88,30 +90,42 @@ sources:
     document_number_selector: div.info
 - id: guangdong-chinatax
   name: 国家税务总局广州市税务局
-  base_url: https://guangdong.chinatax.gov.cn/gdsw/gzsw/gzsw_index.shtml
+  base_url: https://guangdong.chinatax.gov.cn
   encoding: utf-8
-  region: 全国
+  region: 广州
   active: true
   crawl_interval_hours: 48
   list_pages:
-  - url: https://guangdong.chinatax.gov.cn/gdsw/gzsw/gzsw_index.shtml
-    name: 国家税务总局广州市税务局
-    list_selector: ul.list-list li a, ul.list li a, div.news-list li a
+  - url: https://guangdong.chinatax.gov.cn/gdsw/gzsw_gkwj/city_list.shtml
+    name: 广州税务-最新文件
+    list_selector: '#ajaxlist li.itm h4 a'
     max_pages: 1
-  detail_rules: *id001
+  - url: https://guangdong.chinatax.gov.cn/gdsw/gzsw_tggg/city_list.shtml
+    name: 广州税务-通知公告
+    list_selector: '#ajaxlist li.itm h4 a'
+    max_pages: 1
+  detail_rules:
+    title_selector: div.title, h1
+    content_selector: div#zoomcon, div.TRS_Editor
+    publish_date_selector: span#lawfwrq, span.publishTime
+    document_number_selector: div.memo
 - id: shanghai-chinatax
   name: 国家税务总局上海市税务局
-  base_url: https://shanghai.chinatax.gov.cn
+  base_url: https://shanghai.chinatax.gov.cn/zcfw/zxwj/
   encoding: utf-8
-  region: 全国
+  region: 上海
   active: true
   crawl_interval_hours: 48
   list_pages:
-  - url: https://shanghai.chinatax.gov.cn
-    name: 国家税务总局上海市税务局
-    list_selector: ul.list-list li a, ul.list li a, div.news-list li a
+  - url: https://shanghai.chinatax.gov.cn/zcfw/zxwj/
+    name: 上海税务-最新文件
+    list_selector: ul.infolist li a.info
     max_pages: 1
-  detail_rules: *id001
+  detail_rules:
+    title_selector: h1#ivs_title, h1
+    content_selector: div.article_content, div.TRS_Editor, div.rich_text_editor
+    publish_date_selector: span#ivs_date
+    document_number_selector: div.head_show
 - id: banshi-beijing
   name: 北京市政务服务网
   base_url: https://banshi.beijing.gov.cn

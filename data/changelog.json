@@ -1,39 +1,28 @@
 [
   {
-    "date": "2026-05-28",
-    "timestamp": "2026-05-28T05:12:56.672069",
-    "newCount": 2,
-    "updatedCount": 0,
-    "totalCount": 58,
-    "newPolicies": [
-      "nhsa-d5032b20",
-      "nhsa-c2ddc988"
-    ],
-    "summary": "新增 2 条政策"
-  },
-  {
-    "date": "2026-05-27",
-    "timestamp": "2026-05-27T05:18:57.957802",
-    "newCount": 3,
-    "updatedCount": 0,
-    "totalCount": 56,
-    "newPolicies": [
-      "nhsa-29209c83",
-      "nhsa-2326ad1d",
-      "nhsa-2480948c"
-    ],
-    "summary": "新增 3 条政策"
-  },
-  {
     "date": "2026-05-26",
-    "timestamp": "2026-05-26T01:42:55.664103",
-    "newCount": 1,
+    "timestamp": "2026-05-26T17:44:32.787973",
+    "newCount": 15,
     "updatedCount": 0,
-    "totalCount": 53,
+    "totalCount": 67,
     "newPolicies": [
-      "nhsa-62c16961"
+      "nhsa-62c16961",
+      "guangdong-chinatax-86d024b8",
+      "guangdong-chinatax-b0c95906",
+      "guangdong-chinatax-41e515c4",
+      "guangdong-chinatax-eeecc5b8",
+      "guangdong-chinatax-68f3c53f",
+      "guangdong-chinatax-26b2e7b0",
+      "guangdong-chinatax-d059fbe5",
+      "guangdong-chinatax-f1e2149c",
+      "guangdong-chinatax-29ca64d8",
+      "guangdong-chinatax-a8b434d6",
+      "shanghai-chinatax-7630538a",
+      "shanghai-chinatax-67f5ee44",
+      "shanghai-chinatax-160c3e40",
+      "shanghai-chinatax-82dbd6f7"
     ],
-    "summary": "新增 1 条政策"
+    "summary": "新增 15 条政策"
   },
   {
     "date": "2026-05-25",
