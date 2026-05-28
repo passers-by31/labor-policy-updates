@@ -15,7 +15,13 @@ const policies = getAllPolicies();
 const regions = ["全国", "北京市", "上海市", "广东省", "浙江省", "江苏省"];
 const allMonths = [...new Set(policies.map(p => (p.publishDate || "").slice(0, 7)).filter(Boolean))].sort().reverse();
 const latestCrawl = getLatestCrawlInfo();
+
+// 筛选逻辑由客户端 JS 处理（静态页面无法在构建时获取 URL 参数）
+const initialPolicies = policies.slice(0, 20);
 ---
+
+<div id="policies-data" hidden set:html={JSON.stringify(policies).replace(/</g,"\\u003c")}></div>
+<div id="crawl-policies-data" hidden set:html={JSON.stringify(latestCrawl.newPolicies).replace(/</g,"\\u003c")}></div>
 
 <BaseLayout title="政策列表">
   <div class="max-w-6xl mx-auto px-4 py-8">
@@ -78,7 +84,7 @@ const latestCrawl = getLatestCrawlInfo();
         {policies.length > 0 ? (
           <>
             <div id="policy-list" class="space-y-3">
-              {policies.slice(0, 20).map((p) => (
+              {initialPolicies.map((p) => (
                 <a
                   href={`/policies/${p.id}`}
                   class="block bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md hover:border-blue-300 transition-all no-underline"
@@ -142,6 +148,7 @@ const latestCrawl = getLatestCrawlInfo();
 <script>
   // @ts-nocheck
   const policies = JSON.parse(document.getElementById('policies-data')?.textContent || '[]');
+  const crawlPolicyIds = JSON.parse(document.getElementById('crawl-policies-data')?.textContent || '[]');
   const PAGE_SIZE = 20;
   let filtered = [...policies];
   let currentPage = 1;
@@ -233,8 +240,7 @@ const latestCrawl = getLatestCrawlInfo();
       applyFilters();
     }
     if (crawlParam === 'latest') {
-      const crawlPolicies = JSON.parse(document.getElementById('crawl-policies-data')?.textContent || '[]');
-      filtered = policies.filter(p => crawlPolicies.includes(p.id));
+      filtered = policies.filter(p => crawlPolicyIds.includes(p.id));
       renderList();
     }
     document.querySelectorAll('.filter-checkbox').forEach(cb => {
@@ -250,5 +256,3 @@ const latestCrawl = getLatestCrawlInfo();
   });
 </script>
 
-<script type="application/json" id="policies-data">{JSON.stringify(policies)}</script>
-<script type="application/json" id="crawl-policies-data">{JSON.stringify(latestCrawl.newPolicies)}</script>
