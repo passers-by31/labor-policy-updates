@@ -1,5 +1,18 @@
 [
   {
+    "date": "2026-06-12",
+    "timestamp": "2026-06-12T05:41:35.947274",
+    "newCount": 3,
+    "updatedCount": 0,
+    "totalCount": 118,
+    "newPolicies": [
+      "nhsa-a686fbb7",
+      "nhsa-7788ec67",
+      "shanghai-chinatax-28f5bb0c"
+    ],
+    "summary": "新增 3 条政策"
+  },
+  {
     "date": "2026-06-11",
     "timestamp": "2026-06-11T05:38:29.241816",
     "newCount": 6,
