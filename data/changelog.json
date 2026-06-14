@@ -1,5 +1,16 @@
 [
   {
+    "date": "2026-06-14",
+    "timestamp": "2026-06-14T05:41:27.364489",
+    "newCount": 1,
+    "updatedCount": 0,
+    "totalCount": 121,
+    "newPolicies": [
+      "nhsa-12b36fde"
+    ],
+    "summary": "新增 1 条政策"
+  },
+  {
     "date": "2026-06-13",
     "timestamp": "2026-06-13T05:30:05.082298",
     "newCount": 2,
