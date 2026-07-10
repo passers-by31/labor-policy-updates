@@ -1,5 +1,22 @@
 [
   {
+    "date": "2026-07-10",
+    "timestamp": "2026-07-10T04:59:05.988229",
+    "newCount": 7,
+    "updatedCount": 0,
+    "totalCount": 180,
+    "newPolicies": [
+      "govcn-9fc6a4c1",
+      "govcn-e14624ac",
+      "nhsa-33042ae2",
+      "nhsa-5e81797a",
+      "nhsa-c41e67c8",
+      "nhsa-75afbe4a",
+      "nhsa-0bffde21"
+    ],
+    "summary": "新增 7 条政策"
+  },
+  {
     "date": "2026-07-09",
     "timestamp": "2026-07-09T04:55:47.921926",
     "newCount": 2,
