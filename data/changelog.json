@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-07-11",
+    "timestamp": "2026-07-11T04:21:54.650859",
+    "newCount": 2,
+    "updatedCount": 0,
+    "totalCount": 182,
+    "newPolicies": [
+      "nhsa-e22c59d7",
+      "guangdong-chinatax-f7a14b30"
+    ],
+    "summary": "新增 2 条政策"
+  },
+  {
     "date": "2026-07-10",
     "timestamp": "2026-07-10T04:59:05.988229",
     "newCount": 7,
