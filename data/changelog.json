@@ -1,5 +1,16 @@
 [
   {
+    "date": "2026-08-18",
+    "timestamp": "2026-08-18T02:26:16.026975",
+    "newCount": 1,
+    "updatedCount": 0,
+    "totalCount": 266,
+    "newPolicies": [
+      "mohrss-957e10aa"
+    ],
+    "summary": "新增 1 条政策"
+  },
+  {
     "date": "2026-08-17",
     "timestamp": "2026-08-17T02:30:20.372377",
     "newCount": 1,
