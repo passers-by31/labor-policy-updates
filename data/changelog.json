@@ -1,5 +1,22 @@
 [
   {
+    "date": "2026-09-01",
+    "timestamp": "2026-09-01T06:11:36.192746",
+    "newCount": 7,
+    "updatedCount": 0,
+    "totalCount": 293,
+    "newPolicies": [
+      "mohrss-2b2cf285",
+      "nhsa-2ba402e0",
+      "nhsa-77ca63e2",
+      "nhsa-331d2b5a",
+      "nhsa-df2f6aee",
+      "guangdong-chinatax-9c5ff713",
+      "shanghai-chinatax-7076970f"
+    ],
+    "summary": "新增 7 条政策"
+  },
+  {
     "date": "2026-08-29",
     "timestamp": "2026-08-29T07:49:09.232464",
     "newCount": 2,
