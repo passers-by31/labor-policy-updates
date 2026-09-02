@@ -1,5 +1,16 @@
 [
   {
+    "date": "2026-09-02",
+    "timestamp": "2026-09-02T05:33:55.305549",
+    "newCount": 1,
+    "updatedCount": 0,
+    "totalCount": 294,
+    "newPolicies": [
+      "guangdong-chinatax-5cde20fa"
+    ],
+    "summary": "新增 1 条政策"
+  },
+  {
     "date": "2026-09-01",
     "timestamp": "2026-09-01T06:11:36.192746",
     "newCount": 7,
