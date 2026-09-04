@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-09-04",
+    "timestamp": "2026-09-04T05:33:57.449606",
+    "newCount": 2,
+    "updatedCount": 0,
+    "totalCount": 300,
+    "newPolicies": [
+      "nhsa-f35e11b5",
+      "shanghai-chinatax-aea6f3ec"
+    ],
+    "summary": "新增 2 条政策"
+  },
+  {
     "date": "2026-09-03",
     "timestamp": "2026-09-03T05:37:03.137140",
     "newCount": 4,
