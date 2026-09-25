@@ -1,5 +1,16 @@
 [
   {
+    "date": "2026-09-25",
+    "timestamp": "2026-09-25T05:55:04.017082",
+    "newCount": 1,
+    "updatedCount": 0,
+    "totalCount": 352,
+    "newPolicies": [
+      "govcn-c06d0e8a"
+    ],
+    "summary": "新增 1 条政策"
+  },
+  {
     "date": "2026-09-24",
     "timestamp": "2026-09-24T05:58:34.289075",
     "newCount": 3,
