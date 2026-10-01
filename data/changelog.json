@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-10-01",
+    "timestamp": "2026-10-01T06:54:49.531212",
+    "newCount": 2,
+    "updatedCount": 0,
+    "totalCount": 361,
+    "newPolicies": [
+      "govcn-4a09eb37",
+      "guangdong-chinatax-6e22e3e4"
+    ],
+    "summary": "新增 2 条政策"
+  },
+  {
     "date": "2026-09-30",
     "timestamp": "2026-09-30T06:27:16.845497",
     "newCount": 3,
