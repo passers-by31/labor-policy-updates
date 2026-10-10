@@ -1,5 +1,18 @@
 [
   {
+    "date": "2026-10-10",
+    "timestamp": "2026-10-10T06:48:27.052565",
+    "newCount": 3,
+    "updatedCount": 0,
+    "totalCount": 371,
+    "newPolicies": [
+      "mohrss-bd8b78fb",
+      "mohrss-d18f1257",
+      "govcn-01851a57"
+    ],
+    "summary": "新增 3 条政策"
+  },
+  {
     "date": "2026-10-09",
     "timestamp": "2026-10-09T07:17:29.545769",
     "newCount": 4,
