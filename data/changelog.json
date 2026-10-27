@@ -1,5 +1,17 @@
 [
   {
+    "date": "2026-10-27",
+    "timestamp": "2026-10-27T06:04:53.161624",
+    "newCount": 2,
+    "updatedCount": 0,
+    "totalCount": 389,
+    "newPolicies": [
+      "govcn-45060833",
+      "nhsa-600122eb"
+    ],
+    "summary": "新增 2 条政策"
+  },
+  {
     "date": "2026-10-26",
     "timestamp": "2026-10-26T05:54:08.796833",
     "newCount": 1,
