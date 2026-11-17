@@ -1,5 +1,18 @@
 [
   {
+    "date": "2026-11-17",
+    "timestamp": "2026-11-17T08:56:33.443094",
+    "newCount": 3,
+    "updatedCount": 0,
+    "totalCount": 431,
+    "newPolicies": [
+      "mohrss-e5aececa",
+      "mohrss-b7a747de",
+      "nhsa-bc29f6e1"
+    ],
+    "summary": "新增 3 条政策"
+  },
+  {
     "date": "2026-11-16",
     "timestamp": "2026-11-16T07:45:22.175667",
     "newCount": 2,
